@@ -1,4 +1,5 @@
 locals {
+  prefix = "ci-test"
   backend_s3 = "ci-test-terraform-state-bucket"
   backend_ddb = "terraform-state-table"
   region = "us-east-1"

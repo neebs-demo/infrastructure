@@ -1,5 +1,6 @@
 include "root" {
   path = find_in_parent_folders("root.hcl")
+  expose = true
 }
 
 terraform {
@@ -14,7 +15,7 @@ terraform {
 inputs = {
   # WARNING: go to main.tf of module and also update the module source version!
   target_version = "v6.2.2"
-  s3_bucket_name = "ci-test-lambda-artifacts"
+  s3_bucket_name = "${include.root.locals.prefix}-lambda-artifacts"
 }
 
 # output

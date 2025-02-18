@@ -44,7 +44,3 @@ resource "aws_s3_object" "lambda_files" {
   key = each.value
   source = each.key
 }
-
-output "lambda_object_key_mapping" {
-  value = local.object_mapping
-}
