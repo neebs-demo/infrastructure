@@ -38,6 +38,7 @@
 	// Uncomment to connect as root instead. More info: https://aka.ms/dev-containers-non-root.
 	// "remoteUser": "root"
 
+  // TODO: I still can't see the .aws folder in the dev container :(
   // AWS credential mounting to dev container (container's ~ is /root - hence target)
   // https://www.kenmuse.com/blog/dev-containers-and-aws-credentials/
   "mounts": [

@@ -1,19 +1,8 @@
-terraform {
-  source = "../modules"
-}
-
 locals {
   backend_s3 = "ci-test-terraform-state-bucket"
   backend_ddb = "terraform-state-table"
   region = "us-east-1"
 }
-
-inputs = {
-  backend_s3 = local.backend_s3
-  backend_ddb = local.backend_ddb
-}
-
-# TODO: Place generate blocks in a root.hcl file
 
 generate "provider" {
   path      = "provider.tf"

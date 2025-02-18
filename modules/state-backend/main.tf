@@ -8,7 +8,7 @@ resource "aws_s3_bucket" "backend_bucket" {
 }
 
 # block public access (likely already defaulted by aws?)
-resource "aws_s3_bucket_public_access_block" "block_public_acces" {
+resource "aws_s3_bucket_public_access_block" "block_public_access" {
   bucket = aws_s3_bucket.backend_bucket.id
 
   block_public_acls       = true
@@ -37,7 +37,7 @@ resource "aws_s3_bucket_server_side_encryption_configuration" "encryption" {
 }
 
 # create ddb
-resource "aws_dynamodb_table" "example" {
+resource "aws_dynamodb_table" "backend_table" {
   name = var.backend_ddb
   billing_mode   = "PROVISIONED"
   read_capacity  = 5
@@ -49,14 +49,3 @@ resource "aws_dynamodb_table" "example" {
     type = "S"
   }
 }
-
-# uncomment out when ddb and s3 are created
-# terraform {
-#   backend "s3" {
-#     bucket         = "ci-test-terraform-state-bucket"
-#     key            = "app/app.tfstate"
-#     region         = "us-east-1"
-#     encrypt        = true
-#     dynamodb_table = "terraform_state"
-#   }
-# }
