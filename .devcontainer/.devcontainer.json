@@ -21,7 +21,7 @@
 		"ghcr.io/devcontainers-extra/features/node-asdf:0": {
 			"version": "latest"
 		}
-	}
+	},
 
 	// Features to add to the dev container. More info: https://containers.dev/features.
 	// "features": {},
@@ -37,4 +37,10 @@
 
 	// Uncomment to connect as root instead. More info: https://aka.ms/dev-containers-non-root.
 	// "remoteUser": "root"
+
+  // AWS credential mounting to dev container (container's ~ is /root - hence target)
+  // https://www.kenmuse.com/blog/dev-containers-and-aws-credentials/
+  "mounts": [
+    "source=${localEnv:HOME}/.aws,target=/root/.aws,type=bind,consistency=cached"
+  ]
 }

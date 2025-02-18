@@ -28,26 +28,25 @@ terraform {
   }
 }
 
+# credentials will be from provided AWS_ACCESS_KEY_ID, AWS_SECRET_ACCESS_KEY, AWS_SESSION_TOKEN
 provider "aws" {
-  shared_config_files = ["~/.aws/config"]
-  profile             = "tf-ci-test"
-  region              = "${local.region}"
+  region = "${local.region}"
 }
 EOF
 }
 
-# generate "backend" {
-#   path      = "backend.tf"
-#   if_exists = "overwrite_terragrunt"
-#   contents = <<EOF
-# terraform {
-#   backend "s3" {
-#     bucket         = "${local.backend_s3}"
-#     key            = "${path_relative_to_include()}/terraform.tfstate"
-#     region         = "${local.region}"
-#     encrypt        = true
-#     dynamodb_table = "${local.backend_ddb}"
-#   }
-# }
-# EOF
-# }
+generate "backend" {
+  path      = "backend.tf"
+  if_exists = "overwrite_terragrunt"
+  contents = <<EOF
+terraform {
+  backend "s3" {
+    bucket         = "${local.backend_s3}"
+    key            = "${path_relative_to_include()}/terraform.tfstate"
+    region         = "${local.region}"
+    encrypt        = true
+    dynamodb_table = "${local.backend_ddb}"
+  }
+}
+EOF
+}
