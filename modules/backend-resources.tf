@@ -1,6 +1,6 @@
 # create s3
 resource "aws_s3_bucket" "backend_bucket" {
-  bucket = "ci-test-terraform-state-bucket"
+  bucket = var.backend_s3
 
   tags = {
     Name = "terraform state bucket"
@@ -38,7 +38,7 @@ resource "aws_s3_bucket_server_side_encryption_configuration" "encryption" {
 
 # create ddb
 resource "aws_dynamodb_table" "example" {
-  name = "terraform_state"
+  name = var.backend_ddb
   billing_mode   = "PROVISIONED"
   read_capacity  = 5
   write_capacity = 5

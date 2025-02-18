@@ -1,1 +1,3 @@
 .vscode
+.terragrunt-cache
+.terraform.lock.hcl
