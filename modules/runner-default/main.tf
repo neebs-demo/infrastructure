@@ -24,4 +24,9 @@ module "github_runner" {
 
   # for creating spot instances
   create_service_linked_role_spot = true
+
+  # -1 to use account's unreserved concurrency
+  # .Will result in error due to new acc Concurrency Quota
+  # .https://github.com/github-aws-runners/terraform-aws-github-runner/pull/1415
+  scale_up_reserved_concurrent_executions = -1
 }

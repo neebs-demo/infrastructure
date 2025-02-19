@@ -8,10 +8,14 @@ output "webhook_endpoint" {
   value = module.github_runner.webhook.endpoint
 }
 
+output "webhook_secret" {
+  sensitive = true
+  value     = data.aws_ssm_parameter.webhook_secret.value
+}
+
 output "lambda_artifacts_bucket_name" {
   value = var.lambda_artifacts_bucket_name
 }
-
 
 output "lambda_webhook_artifact_key" {
   value = var.lambda_webhook_artifact_key
