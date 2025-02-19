@@ -29,4 +29,7 @@ module "github_runner" {
   # .Will result in error due to new acc Concurrency Quota
   # .https://github.com/github-aws-runners/terraform-aws-github-runner/pull/1415
   scale_up_reserved_concurrent_executions = -1
+
+  # enable connection to runners
+  enable_ssm_on_runners = true
 }
