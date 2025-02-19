@@ -23,11 +23,14 @@ variable "lambda_artifacts_bucket_name" {
   description = "bucket name where lambda artifacts are stored"
 }
 
-variable "lambda_artifacts" {
-  type = map(object({
-    name = string
-  }))
-  description = "artifact name => full artifact object prefix"
+variable "lambda_webhook_artifact_key" {
+  type = string
 }
 
+variable "lambda_runner_binaries_syncer_key" {
+  type = string
+}
 
+variable "lambda_runners_key" {
+  type = string
+}

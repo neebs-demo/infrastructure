@@ -1,6 +1,8 @@
-module "github-runner" {
+module "github_runner" {
   source  = "github-aws-runners/github-runner/aws"
-  version = var.target_version
+  # On bootstrap, ensure same version as lambda-artifacts
+  # On update, OK to bump version
+  version = "6.2.2"
 
   aws_region = var.aws_region
   vpc_id     = var.vpc_id
@@ -9,15 +11,15 @@ module "github-runner" {
   prefix = var.prefix
 
   github_app = {
-    key_base64     = base64encode(data.github_app_private_key_pem)
-    id             = data.github_app_id
-    webhook_secret = data.webhook_secret
+    key_base64     = base64encode(data.aws_ssm_parameter.github_app_private_key_pem.value)
+    id             = data.aws_ssm_parameter.github_app_id.value
+    webhook_secret = data.aws_ssm_parameter.webhook_secret.value
   }
 
   lambda_s3_bucket                  = var.lambda_artifacts_bucket_name
-  webhook_lambda_zip                = var.lambda_artifacts["webhook.zip"]
-  runner_binaries_syncer_lambda_zip = var.lambda_artifacts["runner-binaries-syncer.zip"]
-  runners_lambda_zip                = var.lambda_artifacts["runners.zip"]
+  webhook_lambda_s3_key             = var.lambda_webhook_artifact_key
+  syncer_lambda_s3_key              = var.lambda_runner_binaries_syncer_key
+  runners_lambda_s3_key             = var.lambda_runners_key
   enable_organization_runners = true
 
   # for creating spot instances
