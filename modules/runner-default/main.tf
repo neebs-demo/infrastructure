@@ -33,3 +33,15 @@ module "github_runner" {
   # enable connection to runners
   enable_ssm_on_runners = true
 }
+
+module "webhook_github_app" {
+  source     = "git::https://github.com/github-aws-runners/terraform-aws-github-runner.git//modules/webhook-github-app?ref=v6.2.2"
+  depends_on = [module.github_runner]
+
+  github_app = {
+    key_base64     = base64encode(data.aws_ssm_parameter.github_app_private_key_pem.value)
+    id             = data.aws_ssm_parameter.github_app_id.value
+    webhook_secret = data.aws_ssm_parameter.webhook_secret.value
+  }
+  webhook_endpoint = module.github_runner.webhook.endpoint
+}

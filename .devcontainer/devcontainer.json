@@ -4,6 +4,8 @@
 	"name": "Ubuntu",
 	// Or use a Dockerfile or Docker Compose file. More info: https://containers.dev/guide/dockerfile
 	"image": "mcr.microsoft.com/devcontainers/base:jammy",
+
+  // Features to add to the dev container. More info: https://containers.dev/features.
 	"features": {
 		"ghcr.io/devcontainers/features/aws-cli:1": {
 			"version": "latest"
@@ -20,11 +22,9 @@
 		"ghcr.io/nikobockerman/devcontainer-features/yarn-persistent-cache:1": {},
 		"ghcr.io/devcontainers-extra/features/node-asdf:0": {
 			"version": "latest"
-		}
+		},
+    "ghcr.io/devcontainers/features/github-cli:1": {}
 	},
-
-	// Features to add to the dev container. More info: https://containers.dev/features.
-	// "features": {},
 
 	// Use 'forwardPorts' to make a list of ports inside the container available locally.
 	// "forwardPorts": [],
