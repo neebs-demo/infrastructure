@@ -25,10 +25,7 @@ DEBIAN_FRONTEND=noninteractive apt-get install -y \
     jq \
     uidmap \
     unzip \
-    wget \
-    libpq-dev
-
-# libpq-dev for pg gem
+    wget
 
 user_name=ubuntu
 user_id=$(id -ru $user_name)
