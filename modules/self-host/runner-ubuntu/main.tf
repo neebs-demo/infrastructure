@@ -32,6 +32,45 @@ module "github_runner" {
 
   # enable connection to runners
   enable_ssm_on_runners = true
+
+  # enabling ubuntu 2204
+  # runner config
+  runner_os = "linux"
+  runner_architecture = "x64"
+  runner_run_as = "ubuntu"
+  runner_name_prefix = "ubuntu-2204-x64_"
+
+  userdata_template = "${path.module}/templates/user-data.sh"
+
+  # https://discourse.ubuntu.com/t/search-and-launch-ubuntu-22-04-in-aws-using-cli/27986
+  ami_owners = ["099720109477"] # Canonical's Amazon account ID
+  ami_filter = { # TF: map of list of string required
+    name = ["ubuntu/images/hvm-ssd/ubuntu-jammy-22.04-amd64-server-*"]
+    state = ["available"]
+  }
+
+  # CW logging with {instance_id} is standard
+  # https://docs.aws.amazon.com/prescriptive-guidance/latest/implementing-logging-monitoring-cloudwatch/configure-cloudwatch-ec2-on-premises.html#:~:text=The%20default%20log%20stream%20name,within%20the%20CloudWatch%20log%20group.
+  runner_log_files = [
+    {
+      log_group_name = "syslog"
+      prefix_log_group = true
+      file_path = "/var/log/syslog"
+      log_stream_name = "{instance_id}"
+    },
+    {
+      log_group_name = "user_data"
+      prefix_log_group = true
+      file_path = "/var/log/user-data.log"
+      log_stream_name = "{instance_id}/user_data"
+    },
+    {
+      log_group_name = "runner"
+      prefix_log_group = true
+      file_path = "/opt/actions-runner/_diag/Runner_**.log"
+      log_stream_name = "{instance_id}/runner"
+    }
+  ]
 }
 
 module "webhook_github_app" {
